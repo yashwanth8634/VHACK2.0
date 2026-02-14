@@ -1,18 +1,31 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import gsap from "gsap";
 
-const particles = Array.from({ length: 18 }, (_, i) => ({
-  id: i,
-  size: Math.random() * 3 + 1,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  duration: Math.random() * 4 + 4,
-  delay: Math.random() * 3,
-}));
+// Seeded particle positions (fixed values to avoid hydration mismatch)
+const particles = [
+  { id: 0, size: 2.1, x: 12, y: 8, duration: 5.2, delay: 0.3 },
+  { id: 1, size: 1.4, x: 87, y: 15, duration: 6.1, delay: 1.2 },
+  { id: 2, size: 3.2, x: 45, y: 92, duration: 4.5, delay: 2.1 },
+  { id: 3, size: 1.8, x: 23, y: 67, duration: 7.3, delay: 0.8 },
+  { id: 4, size: 2.5, x: 76, y: 43, duration: 5.8, delay: 1.5 },
+  { id: 5, size: 1.2, x: 34, y: 28, duration: 6.7, delay: 2.8 },
+  { id: 6, size: 3.5, x: 91, y: 72, duration: 4.2, delay: 0.1 },
+  { id: 7, size: 2.8, x: 58, y: 5, duration: 5.5, delay: 1.9 },
+  { id: 8, size: 1.6, x: 7, y: 85, duration: 7.1, delay: 2.4 },
+  { id: 9, size: 2.3, x: 65, y: 55, duration: 4.8, delay: 0.6 },
+  { id: 10, size: 3.1, x: 19, y: 38, duration: 6.3, delay: 1.7 },
+  { id: 11, size: 1.9, x: 82, y: 91, duration: 5.1, delay: 2.6 },
+  { id: 12, size: 2.7, x: 50, y: 18, duration: 7.5, delay: 0.4 },
+  { id: 13, size: 1.3, x: 38, y: 75, duration: 4.4, delay: 1.1 },
+  { id: 14, size: 3.8, x: 72, y: 62, duration: 6.9, delay: 2.2 },
+  { id: 15, size: 2.0, x: 15, y: 48, duration: 5.6, delay: 0.9 },
+  { id: 16, size: 1.7, x: 94, y: 32, duration: 4.1, delay: 1.4 },
+  { id: 17, size: 3.4, x: 28, y: 95, duration: 7.8, delay: 2.7 },
+];
 
 // Floating tech icons for background decoration
 const floatingIcons = [
@@ -266,7 +279,7 @@ export default function Hero() {
           />
           <div className="w-px h-6 sm:h-8 bg-white/10" />
           <img
-            src="https://vignanits.ac.in/wp-content/uploads/2020/07/1595497656733.png"
+            src="/images/1595497656733.png"
             alt="Vignan ITS Logo"
             className="h-9 sm:h-11 md:h-14 w-auto object-contain flex-shrink-0 transition-all duration-300 hover:scale-110"
           />
