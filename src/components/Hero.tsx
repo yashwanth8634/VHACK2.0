@@ -192,19 +192,17 @@ export default function Hero() {
   // Mouse follow glow
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!heroRef.current) return;
+      if (!heroRef.current || !mouseGlowRef.current) return;
       const rect = heroRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      if (mouseGlowRef.current) {
-        gsap.to(mouseGlowRef.current, {
-          x: x - 200,
-          y: y - 200,
-          duration: 0.8,
-          ease: "power2.out",
-        });
-      }
+      gsap.to(mouseGlowRef.current, {
+        left: x - 200,
+        top: y - 200,
+        duration: 0.8,
+        ease: "power2.out",
+      });
     };
 
     const hero = heroRef.current;
