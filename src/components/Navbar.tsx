@@ -49,7 +49,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative">
                 <img
-                  src=""
+                  src="/"
                   alt="VHACK LOGO"
                   className="w-10 h-10 rounded-xl object-contain bg-white/10 group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300"
                 />
