@@ -503,7 +503,7 @@ export default function RegisterPage() {
                             type="text"
                             className="form-input"
                             id="field-leaderName"
-                            placeholder="John Doe"
+                            placeholder="Team Leader Name"
                             value={teamData.leaderName}
                             onChange={(e) =>
                               updateTeamData("leaderName", e.target.value)
@@ -550,7 +550,7 @@ export default function RegisterPage() {
                             type="email"
                             className="form-input"
                             id="field-leaderEmail"
-                            placeholder="john@example.com"
+                            placeholder="Balaji@vignan.ac.in"
                             value={teamData.leaderEmail}
                             onChange={(e) =>
                               updateTeamData("leaderEmail", e.target.value)

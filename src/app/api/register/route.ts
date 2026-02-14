@@ -43,15 +43,7 @@ export async function POST(req: NextRequest) {
 
     await connectDB();
 
-    // Check registration cap (150 teams max)
-    const count = await Registration.countDocuments();
-    if (count >= 150) {
-      return NextResponse.json(
-        { error: "Registrations are full! We've reached the maximum of 150 teams." },
-        { status: 403 }
-      );
-    }
-
+    // Upload screenshot to ImageKit first (before transaction)
     const formData = await req.formData();
 
     // Extract fields
@@ -94,7 +86,7 @@ export async function POST(req: NextRequest) {
       members = [];
     }
 
-    // Validate file size (max 25MB)
+    // Validate file size (max 5MB)
     if (screenshot.size > 5 * 1024 * 1024) {
       return NextResponse.json(
         { error: "Screenshot must be under 5MB" },
@@ -110,30 +102,66 @@ export async function POST(req: NextRequest) {
 
     const screenshotUrl = await uploadImage(buffer, filename);
 
-    // Create registration document
-    const registration = await Registration.create({
-      teamName,
-      domain,
-      teamSize,
-      college,
-      leader: {
-        name: leaderName,
-        email: leaderEmail,
-        phone: leaderPhone,
-        year: leaderYear,
-      },
-      members,
-      transactionId,
-      screenshotUrl,
-    });
+    // Atomic check-and-insert using MongoDB transaction
+    // This prevents race conditions where two users submit at the same time
+    const mongoose = (await import("mongoose")).default;
+    const session = await mongoose.startSession();
 
-    return NextResponse.json(
-      {
-        message: "Registration successful!",
-        registrationId: registration._id,
-      },
-      { status: 201 }
-    );
+    try {
+      let registration: any;
+
+      await session.withTransaction(async () => {
+        // Check registration cap inside the transaction
+        const count = await Registration.countDocuments().session(session);
+        if (count >= 150) {
+          throw new Error("REGISTRATIONS_FULL");
+        }
+
+        // Create registration inside the same transaction
+        const docs = await Registration.create(
+          [
+            {
+              teamName,
+              domain,
+              teamSize,
+              college,
+              leader: {
+                name: leaderName,
+                email: leaderEmail,
+                phone: leaderPhone,
+                year: leaderYear,
+              },
+              members,
+              transactionId,
+              screenshotUrl,
+            },
+          ],
+          { session }
+        );
+        registration = docs[0];
+      });
+
+      session.endSession();
+
+      return NextResponse.json(
+        {
+          message: "Registration successful!",
+          registrationId: registration._id,
+        },
+        { status: 201 }
+      );
+    } catch (txError: any) {
+      session.endSession();
+
+      if (txError.message === "REGISTRATIONS_FULL") {
+        return NextResponse.json(
+          { error: "Registrations are full! We've reached the maximum of 150 teams." },
+          { status: 403 }
+        );
+      }
+
+      throw txError; // re-throw to be caught by outer catch
+    }
   } catch (error: any) {
     console.error("Registration error:", error);
 
