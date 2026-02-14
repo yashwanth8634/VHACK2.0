@@ -159,7 +159,7 @@ export default function PrizePool() {
           className="text-center mb-12 sm:mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-[10px] sm:text-xs font-[Gilroy-Bold] tracking-widest text-accent uppercase mb-4 sm:mb-6">
-            🎁 What You Win
+             What You Win
           </span>
           <h2 className="section-title font-[Gilroy-Heavy] text-white mb-4">
             PRIZE POOL
@@ -216,7 +216,6 @@ export default function PrizePool() {
           className="text-center mt-8 sm:mt-12"
         >
           <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full border border-amber-500/20 bg-amber-500/[0.05]">
-            <span className="text-base sm:text-lg">🚀</span>
             <span className="text-[10px] sm:text-sm font-[Gilroy-Bold] text-amber-300/80 tracking-wide">
               AND MANY MORE EXCITING REWARDS!
             </span>

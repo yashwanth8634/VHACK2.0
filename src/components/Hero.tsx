@@ -31,58 +31,58 @@ const particles = [
 const floatingIcons = [
   {
     icon: "💻",
+    size: "text-2xl sm:text-3xl",
     x: 8,
     y: 15,
-    size: "text-2xl sm:text-3xl",
     delay: 0,
     showMobile: true,
   },
   {
     icon: "🤖",
+    size: "text-xl sm:text-2xl",
     x: 85,
     y: 20,
-    size: "text-xl sm:text-2xl",
     delay: 1.2,
     showMobile: false,
   },
   {
     icon: "⚡",
+    size: "text-xl sm:text-2xl",
     x: 12,
     y: 70,
-    size: "text-xl sm:text-2xl",
     delay: 0.8,
     showMobile: true,
   },
   {
     icon: "🔒",
+    size: "text-2xl sm:text-3xl",
     x: 90,
     y: 65,
-    size: "text-2xl sm:text-3xl",
     delay: 2,
     showMobile: true,
   },
   {
     icon: "🚀",
+    size: "text-xl sm:text-2xl",
     x: 18,
     y: 88,
-    size: "text-xl sm:text-2xl",
     delay: 2.5,
     showMobile: true,
   },
   {
     icon: "🔥",
+    size: "text-xl sm:text-2xl",
     x: 70,
     y: 10,
-    size: "text-lg sm:text-xl",
     delay: 3,
     showMobile: true,
   },
-  { icon: "🎯", x: 75, y: 75, size: "text-lg", delay: 2.2, showMobile: false },
+  { icon: "🎯", size: "text-lg", x: 75, y: 75, delay: 2.2, showMobile: false },
   {
     icon: "🛡️",
+    size: "text-xl sm:text-2xl",
     x: 60,
     y: 5,
-    size: "text-lg sm:text-xl",
     delay: 2.8,
     showMobile: false,
   },
@@ -260,7 +260,7 @@ export default function Hero() {
       {floatingIcons.map((item, i) => (
         <div
           key={i}
-          className={`floating-icon absolute pointer-events-none ${item.size} opacity-25 ${
+          className={`floating-icon absolute pointer-events-none opacity-25 ${item.size} ${
             item.showMobile ? "block" : "hidden sm:block"
           }`}
           style={{ left: `${item.x}%`, top: `${item.y}%` }}
@@ -270,25 +270,31 @@ export default function Hero() {
       ))}
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
-        {/* College badge with club names flanking logo */}
-        <div className="hero-badge inline-flex items-center gap-3 sm:gap-5 px-5 sm:px-8 py-2.5 sm:py-3 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm mb-6 sm:mb-8 opacity-0">
-          <img
-            src="/images/aidx-logo.webp"
-            alt="AID-X Club"
-            className="h-8 sm:h-10 md:h-12 w-auto object-contain flex-shrink-0 transition-all duration-300 hover:scale-110"
-          />
-          <div className="w-px h-6 sm:h-8 bg-white/10" />
+        {/* College badge with logo layout */}
+        <div className="hero-badge inline-flex flex-col items-center gap-4 sm:gap-5 px-6 sm:px-10 py-4 sm:py-5 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm mb-6 sm:mb-8 opacity-0">
+          {/* Vignan logo - top center (large) */}
           <img
             src="/images/1595497656733.png"
             alt="Vignan ITS Logo"
-            className="h-9 sm:h-11 md:h-14 w-auto object-contain flex-shrink-0 transition-all duration-300 hover:scale-110"
+            className="h-16 sm:h-20 md:h-20 w-auto object-contain transition-all duration-300 hover:scale-110"
           />
-          <div className="w-px h-6 sm:h-8 bg-white/10" />
-          <img
-            src="/images/nexus-logo.webp"
-            alt="Nexus Club"
-            className="h-8 sm:h-10 md:h-12 w-auto object-contain flex-shrink-0 transition-all duration-300 hover:scale-110"
-          />
+          {/* Nexus left, AID-X right (smaller) */}
+          <div className="flex items-center justify-center w-full gap-4 sm:gap-10">
+            <div className="bg-white rounded-xl w-[130px] h-[50px] sm:w-[150px] sm:h-[55px] md:w-[150px] md:h-[55px] flex items-center justify-center transition-all duration-300 hover:scale-110">
+              <img
+                src="/images/nexus_m.png"
+                alt="Nexus Club"
+                className="max-h-[36px] sm:max-h-[40px] md:max-h-[40px] w-auto object-contain"
+              />
+            </div>
+            <div className="bg-white rounded-xl w-[130px] h-[50px] sm:w-[150px] sm:h-[55px] md:w-[150px] md:h-[55px] flex items-center justify-center transition-all duration-300 hover:scale-110">
+              <img
+                src="/images/aidx-logo.webp"
+                alt="AID-X Club"
+                className="max-h-[36px] sm:max-h-[40px] md:max-h-[40px] w-auto object-contain"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Presents */}
@@ -403,7 +409,7 @@ export default function Hero() {
             href="/register"
             className="hero-cta glow-btn text-base sm:text-lg !px-8 sm:!px-10 !py-3.5 sm:!py-4 w-full sm:w-auto opacity-0"
           >
-            🚀 Register Now
+            Register Now
           </Link>
           <Link
             href="/#domains"

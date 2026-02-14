@@ -5,7 +5,16 @@ import { useInView } from "framer-motion";
 import { useRef, useCallback, MouseEvent as ReactMouseEvent } from "react";
 import Link from "next/link";
 
-const domains = [
+const domains: {
+  track: string;
+  title: string;
+  description: string;
+  shortDescription: string;
+  icon: string;
+  gradient: string;
+  glowColor: string;
+  tags: string[];
+}[] = [
   {
     track: "01",
     title: "Agentic AI & Intelligent Automation",
@@ -83,7 +92,6 @@ function DomainCard({
         {/* Track number + icon */}
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center gap-3">
-            <span className="text-4xl">{domain.icon}</span>
             <div>
               <span className="text-xs font-[Gilroy-Bold] tracking-widest text-gray-500 uppercase">
                 Track
@@ -95,9 +103,6 @@ function DomainCard({
               </p>
             </div>
           </div>
-          <div
-            className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${domain.gradient} opacity-10 group-hover:opacity-20 transition-opacity`}
-          />
         </div>
 
         {/* Title */}
@@ -166,7 +171,7 @@ export default function Domains() {
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-xs font-bold tracking-widest text-primary uppercase mb-6">
-            🧠 Choose Your Arena
+            Choose Your Arena
           </span>
           <h2 className="section-title font-[Gilroy-Heavy] text-white mb-4">
             DOMAINS

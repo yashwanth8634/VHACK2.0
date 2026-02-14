@@ -3,7 +3,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useCallback, MouseEvent as ReactMouseEvent } from "react";
 
-const reasons = [
+const reasons: {
+  icon: string;
+  title: string;
+  description: string;
+  gradient: string;
+}[] = [
   {
     icon: "🤝",
     title: "Collaborate",
@@ -116,7 +121,7 @@ export default function WhyParticipate() {
           className="text-center mb-12 sm:mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-[10px] sm:text-xs font-[Gilroy-Bold] tracking-widest text-primary uppercase mb-4 sm:mb-6">
-            ✨ Why Join
+            Why Join
           </span>
           <h2 className="section-title font-[Gilroy-Heavy] text-white mb-4">
             WHY PARTICIPATE?

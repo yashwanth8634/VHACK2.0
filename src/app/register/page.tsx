@@ -78,10 +78,35 @@ export default function RegisterPage() {
     ],
   });
   const [transactionId, setTransactionId] = useState("");
+  const [txnChecking, setTxnChecking] = useState(false);
+  const [txnValid, setTxnValid] = useState<boolean | null>(null);
   const [screenshot, setScreenshot] = useState<File | null>(null);
   const [screenshotPreview, setScreenshotPreview] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const checkTransactionId = async (txnId: string) => {
+    const trimmed = txnId.trim();
+    if (!trimmed) return;
+    setTxnChecking(true);
+    setTxnValid(null);
+    try {
+      const res = await fetch("/api/register/check-transaction", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ transactionId: trimmed }),
+      });
+      const data = await res.json();
+      setTxnValid(data.valid);
+      if (!data.valid) {
+        setErrors((prev) => ({ ...prev, transactionId: data.message }));
+      }
+    } catch {
+      // silently fail — server validation will catch it
+    } finally {
+      setTxnChecking(false);
+    }
+  };
 
   const updateTeamData = (field: string, value: any) => {
     setTeamData((prev) => ({ ...prev, [field]: value }));
@@ -110,6 +135,19 @@ export default function RegisterPage() {
     }));
   };
 
+  const focusFirstError = (newErrors: Record<string, string>) => {
+    const firstKey = Object.keys(newErrors)[0];
+    if (firstKey) {
+      setTimeout(() => {
+        const el = document.getElementById(`field-${firstKey}`);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          el.focus({ preventScroll: true });
+        }
+      }, 100);
+    }
+  };
+
   const validateStep1 = (): boolean => {
     const newErrors: Record<string, string> = {};
     if (!teamData.teamName.trim()) newErrors.teamName = "Team name is required";
@@ -136,7 +174,11 @@ export default function RegisterPage() {
     });
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    if (Object.keys(newErrors).length > 0) {
+      focusFirstError(newErrors);
+      return false;
+    }
+    return true;
   };
 
   const validateStep3 = (): boolean => {
@@ -145,7 +187,11 @@ export default function RegisterPage() {
       newErrors.transactionId = "Transaction ID is required";
     if (!screenshot) newErrors.screenshot = "Please upload payment screenshot";
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    if (Object.keys(newErrors).length > 0) {
+      focusFirstError(newErrors);
+      return false;
+    }
+    return true;
   };
 
   const goToStep = (target: number) => {
@@ -348,6 +394,7 @@ export default function RegisterPage() {
                           Team Name *
                         </label>
                         <input
+                          id="field-teamName"
                           type="text"
                           className="form-input"
                           placeholder="e.g., Code Crusaders"
@@ -368,7 +415,11 @@ export default function RegisterPage() {
                         <label className="block text-sm font-bold text-gray-300 mb-3">
                           Select Domain *
                         </label>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div
+                          id="field-domain"
+                          className="grid grid-cols-1 sm:grid-cols-3 gap-3"
+                          tabIndex={-1}
+                        >
                           {domains.map((d) => (
                             <button
                               key={d.id}
@@ -380,9 +431,6 @@ export default function RegisterPage() {
                                   : "border-white/10 bg-white/[0.02] hover:border-white/20"
                               }`}
                             >
-                              <span className="text-2xl block mb-2">
-                                {d.icon}
-                              </span>
                               <span className="text-xs font-bold text-gray-300 leading-tight block">
                                 {d.label}
                               </span>
@@ -419,6 +467,7 @@ export default function RegisterPage() {
                         <input
                           type="text"
                           className="form-input"
+                          id="field-college"
                           placeholder="e.g., Vignan Institute of Technology and Science"
                           value={teamData.college}
                           onChange={(e) =>
@@ -453,6 +502,7 @@ export default function RegisterPage() {
                           <input
                             type="text"
                             className="form-input"
+                            id="field-leaderName"
                             placeholder="John Doe"
                             value={teamData.leaderName}
                             onChange={(e) =>
@@ -470,6 +520,7 @@ export default function RegisterPage() {
                             Year *
                           </label>
                           <select
+                            id="field-leaderYear"
                             className="form-input"
                             value={teamData.leaderYear}
                             onChange={(e) =>
@@ -498,6 +549,7 @@ export default function RegisterPage() {
                           <input
                             type="email"
                             className="form-input"
+                            id="field-leaderEmail"
                             placeholder="john@example.com"
                             value={teamData.leaderEmail}
                             onChange={(e) =>
@@ -517,6 +569,7 @@ export default function RegisterPage() {
                           <input
                             type="tel"
                             className="form-input"
+                            id="field-leaderPhone"
                             placeholder="9876543210"
                             value={teamData.leaderPhone}
                             onChange={(e) =>
@@ -550,6 +603,7 @@ export default function RegisterPage() {
                                 Full Name *
                               </label>
                               <input
+                                id={`field-member_${i}_name`}
                                 type="text"
                                 className="form-input"
                                 placeholder="Member name"
@@ -569,6 +623,7 @@ export default function RegisterPage() {
                                 Year *
                               </label>
                               <select
+                                id={`field-member_${i}_year`}
                                 className="form-input"
                                 value={member.year}
                                 onChange={(e) =>
@@ -599,6 +654,7 @@ export default function RegisterPage() {
                                 Email *
                               </label>
                               <input
+                                id={`field-member_${i}_email`}
                                 type="email"
                                 className="form-input"
                                 placeholder="member@example.com"
@@ -618,6 +674,7 @@ export default function RegisterPage() {
                                 Phone *
                               </label>
                               <input
+                                id={`field-member_${i}_phone`}
                                 type="tel"
                                 className="form-input"
                                 placeholder="9876543210"
@@ -845,22 +902,77 @@ export default function RegisterPage() {
                         <label className="block text-sm font-bold text-gray-300 mb-2">
                           Transaction / UTR ID *
                         </label>
-                        <input
-                          type="text"
-                          className="form-input !text-lg !py-4 tracking-wider"
-                          placeholder="e.g., 425619873254"
-                          value={transactionId}
-                          onChange={(e) => {
-                            setTransactionId(e.target.value);
-                            setErrors((prev) => ({
-                              ...prev,
-                              transactionId: "",
-                            }));
-                          }}
-                        />
+                        <div className="relative">
+                          <input
+                            id="field-transactionId"
+                            type="text"
+                            className={`form-input !text-lg !py-4 tracking-wider ${
+                              txnValid === true
+                                ? "!border-green-500/50"
+                                : txnValid === false
+                                  ? "!border-red-500/50"
+                                  : ""
+                            }`}
+                            placeholder="e.g., 425619873254"
+                            value={transactionId}
+                            onChange={(e) => {
+                              setTransactionId(e.target.value);
+                              setTxnValid(null);
+                              setErrors((prev) => ({
+                                ...prev,
+                                transactionId: "",
+                              }));
+                            }}
+                            onBlur={() => checkTransactionId(transactionId)}
+                          />
+                          {txnChecking && (
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                              <div className="w-5 h-5 border-2 border-primary/40 border-t-primary rounded-full animate-spin" />
+                            </div>
+                          )}
+                          {!txnChecking && txnValid === true && (
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-green-400">
+                              <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                            </div>
+                          )}
+                          {!txnChecking && txnValid === false && (
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-red-400">
+                              <svg
+                                className="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
+                              </svg>
+                            </div>
+                          )}
+                        </div>
                         {errors.transactionId && (
                           <p className="text-red-400 text-xs mt-1">
                             {errors.transactionId}
+                          </p>
+                        )}
+                        {!txnChecking && txnValid === true && (
+                          <p className="text-green-400 text-xs mt-1">
+                            ✓ Transaction ID is valid
                           </p>
                         )}
                         <p className="text-xs text-gray-500 mt-2">
@@ -870,7 +982,7 @@ export default function RegisterPage() {
                       </div>
 
                       {/* Screenshot Upload */}
-                      <div>
+                      <div id="field-screenshot" tabIndex={-1}>
                         <label className="block text-sm font-bold text-gray-300 mb-2">
                           Payment Screenshot *
                         </label>

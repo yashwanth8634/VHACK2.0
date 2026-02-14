@@ -12,6 +12,9 @@ const WhyParticipate = dynamic(() => import("@/components/WhyParticipate"), {
   ssr: true,
 });
 const Timeline = dynamic(() => import("@/components/Timeline"), { ssr: true });
+const CollegeMap = dynamic(() => import("@/components/CollegeMap"), {
+  ssr: true,
+});
 const Footer = dynamic(() => import("@/components/Footer"), { ssr: true });
 
 export default function Home() {
@@ -85,6 +88,7 @@ export default function Home() {
       </div>
 
       <Timeline />
+      <CollegeMap />
       <Footer />
     </main>
   );

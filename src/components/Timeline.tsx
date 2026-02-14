@@ -3,7 +3,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const day1Events = [
+const day1Events: {
+  time: string;
+  title: string;
+  desc: string;
+  icon: string;
+}[] = [
   {
     time: "09:30 – 10:00 AM",
     title: "Opening Ceremony",
@@ -72,7 +77,12 @@ const day1Events = [
   },
 ];
 
-const day2Events = [
+const day2Events: {
+  time: string;
+  title: string;
+  desc: string;
+  icon: string;
+}[] = [
   {
     time: "12:00 AM – 06:00 AM",
     title: "Overnight Grind",
@@ -175,7 +185,7 @@ export default function Timeline() {
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-xs font-bold tracking-widest text-primary uppercase mb-6">
-            ⏰ 24 Hours of Innovation
+            24 Hours of Innovation
           </span>
           <h2 className="section-title font-[Gilroy-Heavy] text-white mb-4">
             EVENT TIMELINE
