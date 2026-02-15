@@ -21,11 +21,6 @@ const nextConfig = {
         hostname: 'vignanits.ac.in',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'ik.imagekit.io',
-        pathname: '/**',
-      },
     ],
   },
 

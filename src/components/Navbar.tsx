@@ -27,6 +27,7 @@ export default function Navbar() {
     { label: "Domains", href: "/#domains" },
     { label: "Prizes", href: "/#prizes" },
     { label: "Schedule", href: "/#schedule" },
+    { label: "About", href: "/about" },
     { label: "Contact", href: "/#contact" },
   ];
 
@@ -75,12 +76,14 @@ export default function Navbar() {
 
             {/* CTA */}
             <div className="flex items-center gap-4">
-              <Link
-                href="/register"
+              <a
+                href="https://unstop.com/hackathons/vhack-20"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hidden sm:inline-flex glow-btn !py-3 !px-6 !text-sm !rounded-xl"
               >
                 Register Now
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -99,8 +102,8 @@ export default function Navbar() {
             <div className="flex-1 flex justify-center">
               <Link href="/">
                 <img
-                  src="https://vignanits.ac.in/wp-content/uploads/2020/07/1595497656733.png"
-                  alt="Vignan ITS Logo"
+                  src="/"
+                  alt="VHACK LOGO"
                   className="w-10 h-10 rounded-lg object-contain bg-white/10"
                 />
               </Link>
@@ -180,13 +183,15 @@ export default function Navbar() {
                   transition={{ delay: 0.3 }}
                   className="mt-4"
                 >
-                  <Link
-                    href="/register"
+                  <a
+                    href="https://unstop.com/hackathons/vhack-20"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() => setMobileOpen(false)}
-                    className="glow-btn w-full"
+                    className="glow-btn w-full text-center"
                   >
                     Register Now
-                  </Link>
+                  </a>
                 </motion.div>
               </div>
             </motion.div>

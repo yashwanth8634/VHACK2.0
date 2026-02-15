@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth  cz-shortcut-listen=true">
       <head>
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="https://fonts.cdnfonts.com" />

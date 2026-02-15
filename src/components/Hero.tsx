@@ -271,11 +271,13 @@ export default function Hero() {
         {/* College badge with logo layout */}
         <div className="hero-badge inline-flex flex-col items-center gap-4 sm:gap-5 px-6 sm:px-10 py-4 sm:py-5 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm mb-6 sm:mb-8 opacity-0">
           {/* Vignan logo - top center (large) */}
-          <img
-            src="/images/1595497656733.png"
-            alt="Vignan ITS Logo"
-            className="h-16 sm:h-20 md:h-20 w-auto object-contain transition-all duration-300 hover:scale-110"
-          />
+          <a href="https://vignanits.ac.in/">
+            <img
+              src="/images/1595497656733.png"
+              alt="Vignan ITS Logo"
+              className="h-16 sm:h-20 md:h-20 w-auto object-contain transition-all duration-300 hover:scale-110"
+            />
+          </a>
           {/* Nexus left, AID-X right (smaller) */}
           <div className="flex items-center justify-center w-full gap-4 sm:gap-10">
             <div className="bg-white rounded-xl w-[130px] h-[50px] sm:w-[150px] sm:h-[55px] md:w-[150px] md:h-[55px] flex items-center justify-center transition-all duration-300 hover:scale-110">
@@ -403,12 +405,14 @@ export default function Hero() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-          <Link
-            href="/register"
+          <a
+            href="https://unstop.com/hackathons/vhack-20"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hero-cta glow-btn text-base sm:text-lg !px-8 sm:!px-10 !py-3.5 sm:!py-4 w-full sm:w-auto opacity-0"
           >
             Register Now
-          </Link>
+          </a>
           <Link
             href="/#domains"
             className="hero-cta outline-btn text-base sm:text-lg !px-8 sm:!px-10 !py-3.5 sm:!py-4 w-full sm:w-auto opacity-0"

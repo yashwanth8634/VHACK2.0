@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useCallback, MouseEvent as ReactMouseEvent } from "react";
-import Link from "next/link";
 
 const domains: {
   track: string;
@@ -129,8 +128,10 @@ function DomainCard({
         </div>
 
         {/* CTA */}
-        <Link
-          href="/register"
+        <a
+          href="https://unstop.com/hackathons/vhack-20"
+          target="_blank"
+          rel="noopener noreferrer"
           className={`inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r ${domain.gradient} text-white font-[Gilroy-Bold] text-sm sm:text-sm uppercase tracking-wider hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.05] active:scale-100 transition-all duration-300 group/btn`}
         >
           Choose Track
@@ -147,7 +148,7 @@ function DomainCard({
               d="M17 8l4 4m0 0l-4 4m4-4H3"
             />
           </svg>
-        </Link>
+        </a>
       </div>
     </motion.div>
   );

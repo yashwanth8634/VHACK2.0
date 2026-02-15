@@ -31,7 +31,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative pt-20 pb-8 overflow-hidden">
+    <footer className="relative pt-20 pb-8 overflow-hidden">
       {/* Top divider */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
@@ -47,15 +47,15 @@ export default function Footer() {
           <div className="relative inline-block">
             <div className="absolute -inset-10 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 blur-3xl rounded-full" />
             <div className="relative glass-card !rounded-3xl px-8 sm:px-16 py-12 sm:py-16 border-primary/10">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-[Gilroy-Heavy] text-white mb-4">
-                Ready to <span className="gradient-text">Build</span>?
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-[Gilroy-Heavy] text-white mb-4">
+                Know More <span className="gradient-text">About Us</span>
               </h2>
-              <p className="text-gray-400 text-lg mb-8 max-w-md mx-auto">
-                27–28 February 2026. 24 hours. One shot to create something
-                legendary.
+              <p className="text-gray-400 text-base mb-8 max-w-md mx-auto">
+                Discover the vision behind VHACK 2.0, meet our team, and learn
+                what makes this hackathon legendary.
               </p>
-              <Link href="/register" className="glow-btn text-lg !px-10 !py-4">
-                Register Your Team
+              <Link href="/about" className="glow-btn text-base !px-8 !py-3">
+                About VHACK 2.0
               </Link>
             </div>
           </div>
@@ -67,8 +67,8 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img
-                src="https://vignanits.ac.in/wp-content/uploads/2020/07/1595497656733.png"
-                alt="Vignan ITS Logo"
+                src="/"
+                alt="VHACK LOGO"
                 className="w-10 h-10 rounded-xl object-contain bg-white/10"
               />
               <span className="font-[Gilroy-Bold] text-xl text-white">
@@ -101,14 +101,12 @@ export default function Footer() {
               Quick Links
             </h4>
             <ul className="space-y-3">
-              {["Home", "Domains", "Prizes", "Schedule", "Register"].map(
+              {["Home", "Domains", "Prizes", "Schedule", "About"].map(
                 (link) => (
                   <li key={link}>
                     <Link
                       href={
-                        link === "Register"
-                          ? "/register"
-                          : `/#${link.toLowerCase()}`
+                        link === "About" ? "/about" : `/#${link.toLowerCase()}`
                       }
                       className={cn(
                         "group relative inline-flex items-center text-gray-400 text-sm font-[Gilroy-Medium] transition-colors",
@@ -142,7 +140,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div id="contact">
             <h4 className="font-[Gilroy-Bold] text-white text-sm uppercase tracking-widest mb-6">
               Contact
             </h4>
