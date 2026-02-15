@@ -67,7 +67,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img
-                src="/"
+                src="/images/1595497656733.png"
                 alt="VHACK LOGO"
                 className="w-10 h-10 rounded-xl object-contain bg-white/10"
               />

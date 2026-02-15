@@ -102,10 +102,10 @@ export default function Navbar() {
             <div className="flex-1 flex justify-center">
               <Link href="/">
                 <img
-                  src="/"
-                  alt="VHACK LOGO"
-                  className="w-10 h-10 rounded-lg object-contain bg-white/10"
-                />
+                    src="/images/1595497656733.png"
+                    alt="VHACK LOGO"
+                    className="w-10 h-10 rounded-lg object-contain bg-white/10"
+                  />
               </Link>
             </div>
 

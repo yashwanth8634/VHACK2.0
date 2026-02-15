@@ -271,7 +271,7 @@ export default function Hero() {
         {/* College badge with logo layout */}
         <div className="hero-badge inline-flex flex-col items-center gap-4 sm:gap-5 px-6 sm:px-10 py-4 sm:py-5 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm mb-6 sm:mb-8 opacity-0">
           {/* Vignan logo - top center (large) */}
-          <a href="https://vignanits.ac.in/">
+          <a href="https://vignanits.ac.in/" target="_blank" rel="noopener noreferrer">
             <img
               src="/images/1595497656733.png"
               alt="Vignan ITS Logo"
